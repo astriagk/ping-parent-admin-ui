@@ -36,7 +36,6 @@ import { ProductModalComponent } from './components/modals/product-modal/product
 import { ContactFormComponent } from './components/forms/contact-form/contact-form.component';
 import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
 
-
 @NgModule({
   declarations: [
     HeaderOneComponent,
@@ -72,13 +71,8 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     ContactFormComponent,
     OffcanvasComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  exports:[
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  exports: [
     HeaderOneComponent,
     BlogItemComponent,
     SubscribeAreaComponent,
@@ -106,6 +100,6 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     ProductModalComponent,
     ContactFormComponent,
     OffcanvasComponent,
-  ]
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

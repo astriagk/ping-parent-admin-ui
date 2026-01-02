@@ -3,11 +3,6 @@
 <!-- header end -->
 
 <main>
-
-  <!-- breadcrumb start -->
-  <app-breadcrumb-one title="Login" subtitle="Login"></app-breadcrumb-one>
-  <!-- breadcrumb end -->
-
   <!-- register Area start-->
   <section class="login-area pt-100 pb-100">
     <div class="container">
@@ -18,34 +13,54 @@
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="mb-20">
                 <label for="name">Username <span>**</span></label>
-                <input id="name" type="text" placeholder="Enter Username" formControlName="name" />
-                @if (name?.hasError('required') && (name?.touched || formSubmitted)) {
-                  <span class="text-danger">
-                    Name is required
-                  </span>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Enter Username"
+                  formControlName="name"
+                />
+                @if (name?.hasError('required') && (name?.touched ||
+                formSubmitted)) {
+                <span class="text-danger"> Name is required </span>
                 }
               </div>
               <div class="mb-20">
                 <label for="email-id">Email Address <span>**</span></label>
-                <input id="email" type="text" placeholder="Email address..." formControlName="email" />
-                @if ((email?.hasError('required') && email?.touched) || (email?.hasError('email') && email?.dirty) || (formSubmitted && !email?.value)) {
-                  <span class="text-danger">
-                    Email is required and must be a valid email address
-                  </span>
+                <input
+                  id="email"
+                  type="text"
+                  placeholder="Email address..."
+                  formControlName="email"
+                />
+                @if ((email?.hasError('required') && email?.touched) ||
+                (email?.hasError('email') && email?.dirty) || (formSubmitted &&
+                !email?.value)) {
+                <span class="text-danger">
+                  Email is required and must be a valid email address
+                </span>
                 }
               </div>
               <div class="mb-30">
                 <label for="pass">Password <span>**</span></label>
-                <input id="password" type="password" placeholder="Enter password..." formControlName="password" />
-                @if ((password?.hasError('required') && password?.touched) || (password?.errors?.['minlength'] && password?.dirty) || (formSubmitted && !password?.value)) {
-                  <span class="text-danger">
-                    Password is required and must be a 6 character
-                  </span>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter password..."
+                  formControlName="password"
+                />
+                @if ((password?.hasError('required') && password?.touched) ||
+                (password?.errors?.['minlength'] && password?.dirty) ||
+                (formSubmitted && !password?.value)) {
+                <span class="text-danger">
+                  Password is required and must be a 6 character
+                </span>
                 }
               </div>
               <button type="submit" class="os-btn w-100">Register Now</button>
               <div class="or-divide"><span>or</span></div>
-              <a routerLink="/pages/login" class="os-btn os-btn-black w-100">login Now</a>
+              <a routerLink="/pages/login" class="os-btn os-btn-black w-100"
+                >login Now</a
+              >
             </form>
           </div>
         </div>
