@@ -1,3 +1,22 @@
+export enum DriverColumnField {
+  USER_ID = 'user_id',
+  PHONE_NUMBER = 'phone_number',
+  IS_ACTIVE = 'is_active',
+}
+
+export enum DriverColumnHeader {
+  DRIVER_ID = 'DRIVER_ID',
+  PHONE_NUMBER = 'PHONE_NUMBER',
+  STATUS = 'STATUS',
+}
+
+export enum DriverActionLabel {
+  VIEW = 'View',
+}
+
+export enum DriverActionType {
+  VIEW = 'view',
+}
 export enum UserStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
@@ -35,4 +54,28 @@ export enum UserRole {
   DRIVER = 'driver',
 }
 
-// UserRoleLabel.getLabel moved to shared/utils/helpers.ts
+export enum ColumnField {
+  ADMIN_ID = 'admin_id',
+  USERNAME = 'username',
+  EMAIL = 'email',
+  PHONE_NUMBER = 'phone_number',
+  ADMIN_ROLE = 'admin_role',
+  IS_ACTIVE = 'is_active',
+}
+
+export enum ColumnHeader {
+  ADMIN_ID = 'ADMIN_ID',
+  USERNAME = 'USERNAME',
+  EMAIL = 'EMAIL',
+  PHONE_NUMBER = 'PHONE_NUMBER',
+  ROLE = 'ROLE',
+  STATUS = 'STATUS',
+}
+
+export enum ActionLabel {
+  VIEW = 'View',
+}
+
+export enum ActionType {
+  VIEW = 'view',
+}

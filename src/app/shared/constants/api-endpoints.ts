@@ -7,4 +7,5 @@ export const ApiEndpoints = {
   ADMIN_DETAIL: '/admin/by-admin-id',
   ADMIN_ACTIVATE: '/admin/by-admin-id',
   ADMIN_DEACTIVATE: '/admin/by-admin-id',
+  USER_LIST: '/admin/users',
 };

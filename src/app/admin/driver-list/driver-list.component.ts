@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-
-interface Driver {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  vehicleNumber: string;
-  status: string;
-  rating: number;
-  totalTrips: number;
-  joinedDate: Date;
-}
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { AppState } from '@store/app.state';
+import * as UserActions from '@store/actions/user.actions';
+import {
+  selectUsers,
+  selectUserError,
+  selectUserTotal,
+} from '@store/selectors/user.selectors';
+import { UserRole, DriverActionType } from '@shared/constants/app.enums';
+import { Messages } from '@shared/constants/messages';
+import { DriverListItem } from '@shared/types/Pages/admin.types';
+import { COLUMNS } from '@shared/constants/tables/colums';
+import { ACTIONS } from '@shared/constants/tables/actions';
 
 @Component({
   selector: 'app-driver-list',
@@ -19,70 +21,67 @@ interface Driver {
   styleUrls: ['./driver-list.component.scss'],
   standalone: false,
 })
-export class DriverListComponent implements OnInit {
-  drivers: Driver[] = [];
-  loading: boolean = true;
+export class DriverListComponent implements OnInit, OnDestroy {
+  messages = Messages;
+  columns = COLUMNS.DRIVER_LIST;
+  actions = ACTIONS.DRIVER_ACTIONS;
+  paginate = {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 0,
+  };
 
-  constructor(private router: Router) {}
+  drivers: DriverListItem[] = [];
+  error$ = this.store.select(selectUserError);
+
+  private subscriptions = new Subscription();
+
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.loadDrivers();
   }
 
-  loadDrivers(): void {
-    // TODO: Replace with actual API call
-    setTimeout(() => {
-      this.drivers = [
-        {
-          id: '1',
-          name: 'Michael Brown',
-          email: 'michael.brown@example.com',
-          phone: '+1 (555) 234-5678',
-          vehicleNumber: 'ABC-1234',
-          status: 'Active',
-          rating: 4.8,
-          totalTrips: 245,
-          joinedDate: new Date('2024-01-10'),
-        },
-        {
-          id: '2',
-          name: 'Sarah Wilson',
-          email: 'sarah.wilson@example.com',
-          phone: '+1 (555) 345-6789',
-          vehicleNumber: 'XYZ-5678',
-          status: 'Active',
-          rating: 4.9,
-          totalTrips: 312,
-          joinedDate: new Date('2023-11-15'),
-        },
-        {
-          id: '3',
-          name: 'David Lee',
-          email: 'david.lee@example.com',
-          phone: '+1 (555) 456-7890',
-          vehicleNumber: 'DEF-9012',
-          status: 'Offline',
-          rating: 4.5,
-          totalTrips: 178,
-          joinedDate: new Date('2024-03-22'),
-        },
-        {
-          id: '4',
-          name: 'Emily Davis',
-          email: 'emily.davis@example.com',
-          phone: '+1 (555) 567-8901',
-          vehicleNumber: 'GHI-3456',
-          status: 'Active',
-          rating: 4.7,
-          totalTrips: 203,
-          joinedDate: new Date('2024-02-05'),
-        },
-      ];
-      this.loading = false;
-    }, 500);
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  viewDriverDetails(driverId: string): void {
-    this.router.navigate(['/admin/drivers', driverId]);
+  loadDrivers(): void {
+    this.store.dispatch(
+      UserActions.loadUserList({
+        user_type: UserRole.DRIVER,
+        page: this.paginate.currentPage,
+        limit: this.paginate.itemsPerPage,
+      })
+    );
+    this.subscriptions.add(
+      this.store.select(selectUsers).subscribe((users) => {
+        this.drivers = users;
+      })
+    );
+    this.subscriptions.add(
+      this.store.select(selectUserTotal).subscribe((total) => {
+        this.paginate.totalItems = total;
+      })
+    );
+  }
+
+  setPage(page: number): void {
+    this.paginate.currentPage = page;
+    this.loadDrivers();
+  }
+
+  onRowClicked(driver: DriverListItem): void {
+    this.router.navigate(['/admin/drivers', driver._id]);
+  }
+
+  onActionClicked(event: { action: string; item: DriverListItem }): void {
+    switch (event.action) {
+      case DriverActionType.VIEW:
+        this.router.navigate(['/admin/drivers', event.item._id]);
+        break;
+      default:
+        console.warn('Unknown action:', event.action);
+    }
   }
 }

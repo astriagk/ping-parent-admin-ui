@@ -6,7 +6,7 @@ import {
   AUTH_REGISTER,
   AUTH_REGISTER_SUCCESS,
   AUTH_REGISTER_FAILURE,
-} from './auth.action-types';
+} from '../action-types/auth.action-types';
 import { LoginRequest, LoginResponse } from '@shared/types/Pages/login.types';
 
 export const login = createAction(AUTH_LOGIN, props<LoginRequest>());

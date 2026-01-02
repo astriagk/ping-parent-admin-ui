@@ -1,9 +1,5 @@
 <div class="admin">
-  <div class="admin__loading" *ngIf="loading">
-    <p>Loading admin details...</p>
-  </div>
-
-  <div *ngIf="!loading && admin">
+  <div *ngIf="admin">
     <div class="admin__card">
       <div class="admin__card-header">
         <div class="admin__card-admin-info">
@@ -73,7 +69,7 @@
     </div>
   </div>
 
-  <div class="admin__not-found" *ngIf="!loading && !admin">
+  <div class="admin__not-found" *ngIf="!admin">
     <p>Admin not found.</p>
     <button class="admin__not-found-back-btn" (click)="goBack()">
       Back to Admins

@@ -9,17 +9,11 @@ import {
   selectAdminError,
 } from '@store/selectors/admin.selectors';
 import { AdminListItem } from '@shared/types/Pages/admin.types';
-import {
-  GenericTableAction,
-  GenericTableColumn,
-} from '@shared/components/generic-table/generic-table.component';
-import { ToastrService } from 'ngx-toastr';
-import {
-  getRoleLabel,
-  getUserStatusClass,
-  getUserStatusLabel,
-} from '@shared/utils/helpers';
-import { LoaderService } from '@shared/services/loader.service';
+import { Messages } from '@shared/constants/messages';
+import { ROUTE_PATHS } from '@shared/constants/routesPaths';
+import { ActionType } from '@shared/constants/app.enums';
+import { COLUMNS } from '@shared/constants/tables/colums';
+import { ACTIONS } from '@shared/constants/tables/actions';
 
 @Component({
   selector: 'app-admin-list',
@@ -28,34 +22,19 @@ import { LoaderService } from '@shared/services/loader.service';
   standalone: false,
 })
 export class AdminListComponent implements OnInit, OnDestroy {
-  columns: GenericTableColumn<AdminListItem>[] = [
-    { field: 'admin_id', header: 'Admin ID' },
-    { field: 'username', header: 'Username' },
-    { field: 'email', header: 'Email' },
-    { field: 'phone_number', header: 'Phone Number' },
-    {
-      field: 'admin_role',
-      header: 'Role',
-      cell: (item) => getRoleLabel(item.admin_role),
-    },
-    {
-      field: 'is_active',
-      header: 'Status',
-      cell: (item) => ({
-        label: getUserStatusLabel(item.is_active),
-        class:
-          'generic-table-badge generic-table__status-badge--' +
-          getUserStatusClass(item.is_active),
-      }),
-    },
-  ];
-
-  actions: GenericTableAction[] = [
-    { label: 'View', action: 'view', class: 'btn-view' },
-  ];
+  messages = Messages;
+  columns = COLUMNS.ADMIN_LIST;
+  actions = ACTIONS.ADMIN_ACTIONS;
 
   admins: AdminListItem[] = [];
   error$ = this.store.select(selectAdminError);
+
+  // Pagination
+  paginate = {
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 0,
+  };
 
   // Table helpers will be passed to generic-table
 
@@ -77,21 +56,26 @@ export class AdminListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.store.select(selectAdmins).subscribe((admins) => {
         this.admins = admins;
+        this.paginate.totalItems = admins.length;
       })
     );
     // Error handling can be done in parent or via generic-table output
   }
 
+  setPage(page: number): void {
+    this.paginate.currentPage = page;
+  }
+
   onRowClicked(admin: AdminListItem): void {
     // Navigate when user clicks on a row
-    this.router.navigate(['/admin/admins', admin.admin_id]);
+    this.router.navigate([ROUTE_PATHS.ADMIN_LIST, admin.admin_id]);
   }
 
   onActionClicked(event: { action: string; item: AdminListItem }): void {
     // Handle action button clicks
     switch (event.action) {
-      case 'view':
-        this.router.navigate(['/admin/admins', event.item.admin_id]);
+      case ActionType.VIEW:
+        this.router.navigate([ROUTE_PATHS.ADMIN_LIST, event.item.admin_id]);
         break;
       default:
         console.warn('Unknown action:', event.action);

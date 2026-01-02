@@ -5,6 +5,7 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as AdminActions from '../actions/admin.actions';
 import { AdminService } from '@shared/services/admin.service';
 import { AdminDetailResponse } from '@shared/types/Pages/admin.types';
+import { Messages } from '@shared/constants/messages';
 
 @Injectable()
 export class AdminEffects {
@@ -22,7 +23,7 @@ export class AdminEffects {
               });
             } else {
               return AdminActions.loadAdminListFailure({
-                error: { error: response.error || 'Failed to load admins' },
+                error: { error: response.error || Messages.ADMIN.LIST_ERROR },
               });
             }
           }),
@@ -47,7 +48,7 @@ export class AdminEffects {
             } else {
               return AdminActions.loadAdminDetailFailure({
                 error: {
-                  error: response.error || 'Failed to load admin detail',
+                  error: response.error || Messages.ADMIN.DETAIL_ERROR,
                 },
               });
             }
@@ -73,7 +74,9 @@ export class AdminEffects {
               });
             } else {
               return AdminActions.activateAdminFailure({
-                error: { error: response.error || 'Failed to activate admin' },
+                error: {
+                  error: response.error || Messages.ADMIN.ACTIVATE_ERROR,
+                },
               });
             }
           }),
@@ -99,7 +102,7 @@ export class AdminEffects {
             } else {
               return AdminActions.deactivateAdminFailure({
                 error: {
-                  error: response.error || 'Failed to deactivate admin',
+                  error: response.error || Messages.ADMIN.DEACTIVATE_ERROR,
                 },
               });
             }

@@ -20,6 +20,15 @@ interface DriverDetails {
   emergencyContact: string;
 }
 
+import { Store } from '@ngrx/store';
+import { AppState } from '@store/app.state';
+import { loadDriverDetail } from '@store/actions/driver.actions';
+import {
+  selectDriverDetail,
+  selectDriverDetailLoading,
+  selectDriverDetailError,
+} from '@store/selectors/driver.selectors';
+
 @Component({
   selector: 'app-driver-details',
   templateUrl: './driver-details.component.html',
@@ -28,63 +37,52 @@ interface DriverDetails {
 })
 export class DriverDetailsComponent implements OnInit {
   driverId: string | null = null;
-  driver: DriverDetails | null = null;
+  driver: any = null;
   loading: boolean = true;
+  error: any = null;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.driverId = this.route.snapshot.paramMap.get('id');
     if (this.driverId) {
-      this.loadDriverDetails(this.driverId);
+      this.store.dispatch(loadDriverDetail({ driverId: this.driverId }));
+      this.store.select(selectDriverDetail).subscribe((driver) => {
+        this.driver = driver || null;
+      });
+      this.store.select(selectDriverDetailLoading).subscribe((loading) => {
+        this.loading = loading;
+      });
+      this.store.select(selectDriverDetailError).subscribe((error) => {
+        this.error = error;
+      });
     }
-  }
-
-  loadDriverDetails(id: string): void {
-    // TODO: Replace with actual API call
-    setTimeout(() => {
-      this.driver = {
-        id: id,
-        name: 'Michael Brown',
-        email: 'michael.brown@example.com',
-        phone: '+1 (555) 234-5678',
-        vehicleNumber: 'ABC-1234',
-        vehicleModel: 'Toyota Camry 2022',
-        vehicleColor: 'Silver',
-        licenseNumber: 'DL12345678',
-        status: 'Active',
-        rating: 4.8,
-        totalTrips: 245,
-        totalEarnings: 12450.0,
-        joinedDate: new Date('2024-01-10'),
-        lastActiveDate: new Date('2025-01-02'),
-        address: '456 Driver Lane, City, State 54321',
-        emergencyContact: '+1 (555) 987-6543',
-      };
-      this.loading = false;
-    }, 500);
   }
 
   goBack(): void {
     this.router.navigate(['/admin/drivers']);
   }
 
-  editDriver(): void {
-    // TODO: Implement edit functionality
-    console.log('Edit driver:', this.driverId);
+  approveDriver(): void {
+    // TODO: Implement approve functionality
+    console.log('Approve driver:', this.driverId);
+  }
+
+  rejectDriver(): void {
+    // TODO: Implement reject functionality
+    if (confirm('Are you sure you want to reject this driver?')) {
+      console.log('Reject driver:', this.driverId);
+    }
   }
 
   suspendDriver(): void {
     // TODO: Implement suspend functionality
     if (confirm('Are you sure you want to suspend this driver?')) {
       console.log('Suspend driver:', this.driverId);
-    }
-  }
-
-  deleteDriver(): void {
-    // TODO: Implement delete functionality
-    if (confirm('Are you sure you want to delete this driver?')) {
-      console.log('Delete driver:', this.driverId);
     }
   }
 }

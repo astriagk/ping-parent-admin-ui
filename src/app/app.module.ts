@@ -18,6 +18,8 @@ import { AuthEffects } from '@store/effects/auth.effects';
 import { AdminEffects } from '@store/effects/admin.effects';
 import { LoaderInterceptor } from '@shared/interceptors/loader.interceptor';
 import { loaderConfig } from '@shared/config/loader.config';
+import { UserEffects } from '@store/effects/user.effects';
+import { DriverEffects } from '@store/effects/driver.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +37,12 @@ import { loaderConfig } from '@shared/config/loader.config';
       positionClass: 'toast-top-center',
     }),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects, AdminEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      AdminEffects,
+      UserEffects,
+      DriverEffects,
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

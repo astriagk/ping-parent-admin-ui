@@ -1,27 +1,38 @@
 <div class="driver-details-container">
-  <div class="loading" *ngIf="loading">
-    <p>Loading driver details...</p>
-  </div>
-
   <div class="details-content" *ngIf="!loading && driver">
-    <div class="header">
-      <button class="btn-back" (click)="goBack()">← Back to Drivers</button>
-      <h1>Driver Details</h1>
-    </div>
-
     <div class="details-card">
       <div class="card-header">
         <div class="driver-info">
-          <h2>{{ driver.name }}</h2>
-          <span [class]="'status-badge ' + (driver.status === 'Active' ? 'active' : 'offline')">
-            {{ driver.status }}
-          </span>
-          <span class="rating">⭐ {{ driver.rating }}</span>
+          <div class="driver-header-flex">
+            <img
+              *ngIf="driver.photo_url"
+              [src]="driver.photo_url"
+              alt="Driver Photo"
+              class="driver-photo"
+            />
+            <div>
+              <h2 class="driver-name">{{ driver.name }}</h2>
+              <div class="driver-badges-row">
+                <span
+                  [class]="
+                    'status-badge ' +
+                    (driver.user?.is_active ? 'active' : 'offline')
+                  "
+                >
+                  {{ driver.user?.is_active ? "Active" : "Inactive" }}
+                </span>
+                <span class="approval-badge">
+                  {{ driver.approval_status | titlecase }}
+                </span>
+                <span class="rating-badge">⭐ {{ driver.rating }}</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="actions">
-          <button class="btn-edit" (click)="editDriver()">Edit</button>
+          <button class="btn-approve" (click)="approveDriver()">Approve</button>
+          <button class="btn-reject" (click)="rejectDriver()">Reject</button>
           <button class="btn-suspend" (click)="suspendDriver()">Suspend</button>
-          <button class="btn-delete" (click)="deleteDriver()">Delete</button>
         </div>
       </div>
 
@@ -29,11 +40,15 @@
         <div class="stats-section">
           <div class="stat-card">
             <label>Total Trips</label>
-            <p class="stat-value">{{ driver.totalTrips }}</p>
+            <p class="stat-value">{{ driver.total_trips }}</p>
           </div>
           <div class="stat-card">
-            <label>Total Earnings</label>
-            <p class="stat-value">${{ driver.totalEarnings | number: '1.2-2' }}</p>
+            <label>Vehicle Capacity</label>
+            <p class="stat-value">{{ driver.vehicle_capacity }}</p>
+          </div>
+          <div class="stat-card">
+            <label>Current Student Count</label>
+            <p class="stat-value">{{ driver.current_student_count }}</p>
           </div>
           <div class="stat-card">
             <label>Rating</label>
@@ -45,8 +60,8 @@
           <h3>Personal Information</h3>
           <div class="info-grid">
             <div class="info-item">
-              <label>Driver ID</label>
-              <p>{{ driver.id }}</p>
+              <label>Driver Unique ID</label>
+              <p>{{ driver.driver_unique_id }}</p>
             </div>
             <div class="info-item">
               <label>Email</label>
@@ -54,19 +69,49 @@
             </div>
             <div class="info-item">
               <label>Phone</label>
-              <p>{{ driver.phone }}</p>
+              <p>{{ driver.user?.phone_number }}</p>
             </div>
             <div class="info-item">
-              <label>Address</label>
-              <p>{{ driver.address }}</p>
+              <label>Approval Status</label>
+              <p>{{ driver.approval_status | titlecase }}</p>
             </div>
             <div class="info-item">
-              <label>Emergency Contact</label>
-              <p>{{ driver.emergencyContact }}</p>
+              <label>Available</label>
+              <p>{{ driver.is_available ? "Yes" : "No" }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Address</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Address Line 1</label>
+              <p>{{ driver.addresses?.address_line1 }}</p>
             </div>
             <div class="info-item">
-              <label>License Number</label>
-              <p>{{ driver.licenseNumber }}</p>
+              <label>Address Line 2</label>
+              <p>{{ driver.addresses?.address_line2 }}</p>
+            </div>
+            <div class="info-item">
+              <label>City</label>
+              <p>{{ driver.addresses?.city }}</p>
+            </div>
+            <div class="info-item">
+              <label>State</label>
+              <p>{{ driver.addresses?.state }}</p>
+            </div>
+            <div class="info-item">
+              <label>Pincode</label>
+              <p>{{ driver.addresses?.pincode }}</p>
+            </div>
+            <div class="info-item">
+              <label>Latitude</label>
+              <p>{{ driver.addresses?.latitude }}</p>
+            </div>
+            <div class="info-item">
+              <label>Longitude</label>
+              <p>{{ driver.addresses?.longitude }}</p>
             </div>
           </div>
         </div>
@@ -75,16 +120,52 @@
           <h3>Vehicle Information</h3>
           <div class="info-grid">
             <div class="info-item">
+              <label>Vehicle Type</label>
+              <p>{{ driver.vehicle_type }}</p>
+            </div>
+            <div class="info-item">
               <label>Vehicle Number</label>
-              <p>{{ driver.vehicleNumber }}</p>
+              <p>{{ driver.vehicle_number }}</p>
             </div>
             <div class="info-item">
-              <label>Vehicle Model</label>
-              <p>{{ driver.vehicleModel }}</p>
+              <label>Vehicle Capacity</label>
+              <p>{{ driver.vehicle_capacity }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Documents</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Driving License Number</label>
+              <p>{{ driver.documents?.driving_license_number }}</p>
+              <a
+                *ngIf="driver.documents?.driving_license_photo_url"
+                [href]="driver.documents?.driving_license_photo_url"
+                target="_blank"
+                >View License</a
+              >
             </div>
             <div class="info-item">
-              <label>Vehicle Color</label>
-              <p>{{ driver.vehicleColor }}</p>
+              <label>Vehicle License Number</label>
+              <p>{{ driver.documents?.vehicle_license_number }}</p>
+              <a
+                *ngIf="driver.documents?.vehicle_license_photo_url"
+                [href]="driver.documents?.vehicle_license_photo_url"
+                target="_blank"
+                >View Vehicle License</a
+              >
+            </div>
+            <div class="info-item">
+              <label>Insurance Number</label>
+              <p>{{ driver.documents?.insurance_number }}</p>
+              <a
+                *ngIf="driver.documents?.insurance_photo_url"
+                [href]="driver.documents?.insurance_photo_url"
+                target="_blank"
+                >View Insurance</a
+              >
             </div>
           </div>
         </div>
@@ -93,12 +174,22 @@
           <h3>Account Information</h3>
           <div class="info-grid">
             <div class="info-item">
-              <label>Joined Date</label>
-              <p>{{ driver.joinedDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+              <label>Created At</label>
+              <p>
+                {{
+                  driver.created_at?.$date || driver.created_at
+                    | date : "MMM dd, yyyy HH:mm"
+                }}
+              </p>
             </div>
             <div class="info-item">
-              <label>Last Active</label>
-              <p>{{ driver.lastActiveDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+              <label>Updated At</label>
+              <p>
+                {{
+                  driver.updated_at?.$date || driver.updated_at
+                    | date : "MMM dd, yyyy HH:mm"
+                }}
+              </p>
             </div>
           </div>
         </div>

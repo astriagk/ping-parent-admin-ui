@@ -35,9 +35,12 @@ export class GenericTableComponent<T = any> {
   @Input() emptyMessage: string = 'No data found.';
   @Input() tableCaption?: string;
   @Input() enableRowClick: boolean = true;
+  @Input() data: any[] = [];
+  @Input() paginate: any;
 
   @Output() rowClicked = new EventEmitter<T>();
   @Output() actionClicked = new EventEmitter<{ action: string; item: T }>();
+  @Output() setPage = new EventEmitter<any>();
 
   rowClick(item: T) {
     if (this.enableRowClick) {

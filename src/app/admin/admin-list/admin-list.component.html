@@ -2,8 +2,11 @@
   [items]="admins"
   [columns]="columns"
   [actions]="actions"
-  [tableCaption]="'Admin users list'"
-  [emptyMessage]="'No admins found.'"
+  [tableCaption]="messages.ADMIN.LIST_CAPTION"
+  [emptyMessage]="messages.ADMIN.EMPTY_LIST"
+  [data]="admins"
+  [paginate]="paginate"
   (rowClicked)="onRowClicked($event)"
   (actionClicked)="onActionClicked($event)"
+  (setPage)="setPage($event)"
 ></app-generic-table>

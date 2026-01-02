@@ -29,7 +29,6 @@ import {
 export class AdminDetailsComponent implements OnInit {
   adminId: string | null = null;
   admin: AdminDetail | null = null;
-  loading: boolean = true;
 
   // Helper references for template
   getRoleLabel = getRoleLabel;
@@ -49,9 +48,6 @@ export class AdminDetailsComponent implements OnInit {
       this.store.dispatch(loadAdminDetail({ adminId: this.adminId }));
       this.store.select(selectSelectedAdmin).subscribe((admin) => {
         this.admin = admin || null;
-      });
-      this.store.select(selectAdminDetailLoading).subscribe((loading) => {
-        this.loading = loading;
       });
       this.store.select(selectAdminError).subscribe((error) => {
         if (error && error.error) {

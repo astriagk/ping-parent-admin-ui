@@ -1,4 +1,11 @@
 <div class="generic-table">
+  <app-pagination
+    [data]="data"
+    [paginate]="paginate"
+    (setPage)="setPage.emit($event)"
+  >
+  </app-pagination>
+
   <div class="generic-table__table">
     <table [attr.aria-label]="tableCaption || 'Data table'">
       <caption *ngIf="tableCaption" class="sr-only">
@@ -83,4 +90,11 @@
       <p>{{ emptyMessage }}</p>
     </div>
   </div>
+
+  <app-pagination
+    [data]="data"
+    [paginate]="paginate"
+    (setPage)="setPage.emit($event)"
+  >
+  </app-pagination>
 </div>

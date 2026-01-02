@@ -3,7 +3,16 @@ import {
   ADMIN_LOAD_LIST,
   ADMIN_LOAD_LIST_SUCCESS,
   ADMIN_LOAD_LIST_FAILURE,
-} from './admin.action-types';
+  ADMIN_LOAD_DETAIL,
+  ADMIN_LOAD_DETAIL_SUCCESS,
+  ADMIN_LOAD_DETAIL_FAILURE,
+  ADMIN_ACTIVATE,
+  ADMIN_ACTIVATE_SUCCESS,
+  ADMIN_ACTIVATE_FAILURE,
+  ADMIN_DEACTIVATE,
+  ADMIN_DEACTIVATE_SUCCESS,
+  ADMIN_DEACTIVATE_FAILURE,
+} from '../action-types/admin.action-types';
 import {
   AdminListItem,
   AdminError,
@@ -23,46 +32,46 @@ export const loadAdminListFailure = createAction(
 );
 
 export const loadAdminDetail = createAction(
-  '[Admin] Load Admin Detail',
+  ADMIN_LOAD_DETAIL,
   props<{ adminId: string }>()
 );
 
 export const loadAdminDetailSuccess = createAction(
-  '[Admin] Load Admin Detail Success',
+  ADMIN_LOAD_DETAIL_SUCCESS,
   props<{ admin: AdminDetail }>()
 );
 
 export const loadAdminDetailFailure = createAction(
-  '[Admin] Load Admin Detail Failure',
+  ADMIN_LOAD_DETAIL_FAILURE,
   props<{ error: AdminError }>()
 );
 
 export const activateAdmin = createAction(
-  '[Admin] Activate Admin',
+  ADMIN_ACTIVATE,
   props<{ adminId: string }>()
 );
 
 export const activateAdminSuccess = createAction(
-  '[Admin] Activate Admin Success',
+  ADMIN_ACTIVATE_SUCCESS,
   props<{ admin: AdminDetail; message?: string }>()
 );
 
 export const activateAdminFailure = createAction(
-  '[Admin] Activate Admin Failure',
+  ADMIN_ACTIVATE_FAILURE,
   props<{ error: AdminError }>()
 );
 
 export const deactivateAdmin = createAction(
-  '[Admin] Deactivate Admin',
+  ADMIN_DEACTIVATE,
   props<{ adminId: string }>()
 );
 
 export const deactivateAdminSuccess = createAction(
-  '[Admin] Deactivate Admin Success',
+  ADMIN_DEACTIVATE_SUCCESS,
   props<{ admin: AdminDetail; message?: string }>()
 );
 
 export const deactivateAdminFailure = createAction(
-  '[Admin] Deactivate Admin Failure',
+  ADMIN_DEACTIVATE_FAILURE,
   props<{ error: AdminError }>()
 );
