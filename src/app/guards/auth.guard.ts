@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '@shared/services/auth.service';
 import { Store } from '@ngrx/store';
-import { selectAccessToken } from '../store/selectors/auth.selectors';
+import { selectAccessToken } from '@store/selectors/auth.selectors';
 import { catchError, map, switchMap, take } from 'rxjs/operators';
-import { AppState } from '../store/app.state';
-import { ROUTE_PATHS } from '../shared/constants/routesPaths';
+import { AppState } from '@store/app.state';
+import { ROUTE_PATHS } from '@shared/constants/routesPaths';
+import { LocalStorageKey } from '@shared/constants/app.enums';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -22,7 +23,11 @@ export class AuthGuard implements CanActivate {
       take(1),
       switchMap((token) => {
         console.log(token);
-        if (!token) {
+        // Check localStorage if token is not in store (e.g., on page refresh)
+        const storageToken = localStorage.getItem(LocalStorageKey.AccessToken);
+        const activeToken = token || storageToken;
+
+        if (!activeToken) {
           return of(this.router.createUrlTree([ROUTE_PATHS.LOGIN]));
         }
         return this.authService.verifyToken().pipe(

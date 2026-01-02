@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { ProductService } from '@shared/services/product.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { IProduct } from 'src/app/shared/types/product-d-t';
+import { IProduct } from '@shared/types/product-d-t';
 
 @Component({
-    selector: 'app-dynamic-shop-details',
-    templateUrl: './dynamic-shop-details.component.html',
-    styleUrls: ['./dynamic-shop-details.component.scss'],
-    standalone: false
+  selector: 'app-dynamic-shop-details',
+  templateUrl: './dynamic-shop-details.component.html',
+  styleUrls: ['./dynamic-shop-details.component.scss'],
+  standalone: false,
 })
 export class DynamicShopDetailsComponent {
   public product: IProduct | null | undefined;

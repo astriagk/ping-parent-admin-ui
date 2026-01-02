@@ -31,7 +31,7 @@ root/
 ### Key Folders
 
 - **src/app/pages/**: Contains feature modules for each page (login, register, blog, etc.).
-- **src/app/shared/**: Shared resources:
+- **@shared/**: Shared resources:
   - `components/`: Reusable UI components (breadcrumb, header, footer, etc.)
   - `services/`: Shared Angular services
   - `types/`: TypeScript interfaces and types
@@ -82,13 +82,13 @@ src/app/
    ```sh
    npm install @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools
    ```
-2. **Create the `store/` folder** in `src/app/` as shown above.
+2. **Create the `@store/` folder** in `src/app/` as shown above.
 3. **Register StoreModule and EffectsModule** in `app.module.ts`:
 
    ```typescript
    import { StoreModule } from "@ngrx/store";
    import { EffectsModule } from "@ngrx/effects";
-   import { reducers } from "./store/reducers";
+   import { reducers } from "@store/reducers";
 
    @NgModule({
      imports: [
@@ -100,7 +100,7 @@ src/app/
    export class AppModule {}
    ```
 
-4. **Organize state by feature** (e.g., auth, cart, products) in the `store/` folder.
+4. **Organize state by feature** (e.g., auth, cart, products) in the `@store/` folder.
 5. **Use selectors and effects** for efficient state querying and side effects.
 
 ### Where to Use NgRx
@@ -176,6 +176,6 @@ For more details, see the code comments and explore the `src/app` folder for fea
 
 ### AuthService Usage with NgRx Effects
 
-- AuthService is placed in `src/app/shared/services/auth.service.ts`
+- AuthService is placed in `@shared/services/auth.service.ts`
 - It is providedIn: 'root' for global access.
 - Use it in effects for authentication API calls.

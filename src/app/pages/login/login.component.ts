@@ -2,19 +2,19 @@ import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AppState } from '../../store/app.state';
-import * as AuthActions from '../../store/actions/auth.actions';
-import {
-  selectAuthLoading,
-  selectAuthError,
-  selectUser,
-} from '../../store/selectors/auth.selectors';
 import { filter } from 'rxjs/operators';
-import { ValidationMessages } from '../../shared/constants/validation-messages';
+import { ValidationMessages } from '@shared/constants/validation-messages';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Messages } from 'src/app/shared/constants/messages';
-import { ROUTE_PATHS } from 'src/app/shared/constants/routesPaths';
+import { Messages } from '@shared/constants/messages';
+import { ROUTE_PATHS } from '@shared/constants/routesPaths';
+import {
+  selectAuthError,
+  selectAuthLoading,
+  selectUser,
+} from '@store/selectors/auth.selectors';
+import { AppState } from '@store/app.state';
+import * as AuthActions from '@store/actions/auth.actions';
 
 @Component({
   selector: 'app-login',

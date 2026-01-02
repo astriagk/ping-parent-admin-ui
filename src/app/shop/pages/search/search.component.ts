@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
-import { IProduct } from 'src/app/shared/types/product-d-t';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { IProduct } from '@shared/types/product-d-t';
+import { ProductService } from '@shared/services/product.service';
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss'],
-    standalone: false
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
+  standalone: false,
 })
 export class SearchComponent {
-
   public products: IProduct[] = [];
   public filteredProducts: IProduct[] = [];
   public searchText: string = '';
@@ -42,7 +41,7 @@ export class SearchComponent {
                 return 1;
               }
               return 0;
-            })
+            });
             break;
 
           case 'high':
@@ -68,25 +67,30 @@ export class SearchComponent {
 
         if (this.searchText && !this.productType) {
           this.products = productData.filter((prd) =>
-            prd.title.split(' ').join('-').toLowerCase().includes(this.searchText)
+            prd.title
+              .split(' ')
+              .join('-')
+              .toLowerCase()
+              .includes(this.searchText)
           );
         }
         if (this.productType && !this.searchText) {
           this.products = productData.filter(
-            (prd) => prd.category.toLowerCase() === this.productType.toLowerCase()
+            (prd) =>
+              prd.category.toLowerCase() === this.productType.toLowerCase()
           );
         }
 
         if (this.productType && this.searchText) {
           this.products = productData
             .filter(
-              (prd) => prd.category.toLowerCase() === this.productType.toLowerCase()
+              (prd) =>
+                prd.category.toLowerCase() === this.productType.toLowerCase()
             )
             .filter((p) =>
               p.title.toLowerCase().includes(this.searchText.toLowerCase())
             );
         }
-
       });
     });
   }
@@ -116,14 +120,14 @@ export class SearchComponent {
       });
   }
 
-   // product Pagination
-   setPage(page: number) {
+  // product Pagination
+  setPage(page: number) {
     this.router
       .navigate([], {
         relativeTo: this.route,
         queryParams: { page: page },
         queryParamsHandling: 'merge',
-        skipLocationChange: false
+        skipLocationChange: false,
       })
       .finally(() => {
         this.viewScroller.setOffset([120, 120]);

@@ -1,15 +1,15 @@
-import { Component,Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { UtilsService } from 'src/app/shared/services/utils.service';
-import { IProduct } from 'src/app/shared/types/product-d-t';
+import { ProductService } from '@shared/services/product.service';
+import { UtilsService } from '@shared/services/utils.service';
+import { IProduct } from '@shared/types/product-d-t';
 
 @Component({
-    selector: 'app-shop-area',
-    templateUrl: './shop-area.component.html',
-    styleUrls: ['./shop-area.component.scss'],
-    standalone: false
+  selector: 'app-shop-area',
+  templateUrl: './shop-area.component.html',
+  styleUrls: ['./shop-area.component.scss'],
+  standalone: false,
 })
 export class ShopAreaComponent {
   @Input() shop_right = false;
@@ -55,19 +55,21 @@ export class ShopAreaComponent {
         // Sorting Filter
         this.products = this.productService.sortProducts(response, this.sortBy);
         // Category Filter
-        if (this.category){
+        if (this.category) {
           this.products = this.products.filter(
-            (p) => this.utilsService.convertToURL(p.parentCategory) === this.category
+            (p) =>
+              this.utilsService.convertToURL(p.parentCategory) === this.category
           );
         }
         // sub category Filter
-        if (this.subcategory){
+        if (this.subcategory) {
           this.products = this.products.filter(
-            (p) => this.utilsService.convertToURL(p.category) === this.subcategory
+            (p) =>
+              this.utilsService.convertToURL(p.category) === this.subcategory
           );
         }
         // size Filter
-        if (this.size){
+        if (this.size) {
           this.products = this.products.filter((product) => {
             return (
               product.sizes &&
@@ -76,31 +78,43 @@ export class ShopAreaComponent {
           });
         }
         // color Filter
-        if (this.color){
+        if (this.color) {
           this.products = this.products.filter((product) => {
             return (
               product.colors &&
-              product.colors.some((c) => c.split(' ').join('-').toLowerCase() === this.color)
+              product.colors.some(
+                (c) => c.split(' ').join('-').toLowerCase() === this.color
+              )
             );
           });
         }
         // brand Filter
-        if (this.brand){
-          this.products = this.products.filter((p) => p.brand.toLowerCase() === this.brand);
+        if (this.brand) {
+          this.products = this.products.filter(
+            (p) => p.brand.toLowerCase() === this.brand
+          );
         }
 
         // Price Filter
         this.products = this.products.filter(
-          (p) => p.price >= Number(this.minPrice) && p.price <= Number(this.maxPrice)
+          (p) =>
+            p.price >= Number(this.minPrice) && p.price <= Number(this.maxPrice)
         );
         // Paginate Products
-        this.paginate = this.productService.getPager(this.products.length,Number(+this.pageNo),this.pageSize);
-        this.products = this.products.slice(this.paginate.startIndex,this.paginate.endIndex + 1);
+        this.paginate = this.productService.getPager(
+          this.products.length,
+          Number(+this.pageNo),
+          this.pageSize
+        );
+        this.products = this.products.slice(
+          this.paginate.startIndex,
+          this.paginate.endIndex + 1
+        );
       });
     });
   }
 
-  ngOnInit(){}
+  ngOnInit() {}
   // Append filter value to Url
   updateFilter(tags: any) {
     console.log('tags', tags);
@@ -110,16 +124,18 @@ export class ShopAreaComponent {
     this.sortByFilter(value);
   }
   // SortBy Filter
-  sortByFilter(value:string) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { sortBy: value ? value : null},
-      queryParamsHandling: 'merge', // preserve the existing query params in the route
-      skipLocationChange: false  // do trigger navigation
-    }).finally(() => {
-      this.viewScroller.setOffset([120, 120]);
-      this.viewScroller.scrollToAnchor('products'); // Anchore Link
-    });
+  sortByFilter(value: string) {
+    this.router
+      .navigate([], {
+        relativeTo: this.route,
+        queryParams: { sortBy: value ? value : null },
+        queryParamsHandling: 'merge', // preserve the existing query params in the route
+        skipLocationChange: false, // do trigger navigation
+      })
+      .finally(() => {
+        this.viewScroller.setOffset([120, 120]);
+        this.viewScroller.scrollToAnchor('products'); // Anchore Link
+      });
   }
 
   // product Pagination
@@ -137,7 +153,7 @@ export class ShopAreaComponent {
       });
   }
 
-  handleResetFilter () {
+  handleResetFilter() {
     this.minPrice = 0;
     this.maxPrice = this.productService.maxPrice;
     this.router.navigate(['/shop']);

@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { IProduct } from 'src/app/shared/types/product-d-t';
+import { ProductService } from '@shared/services/product.service';
+import { IProduct } from '@shared/types/product-d-t';
 
 @Component({
-    selector: 'app-related-products',
-    templateUrl: './related-products.component.html',
-    styleUrls: ['./related-products.component.scss'],
-    standalone: false
+  selector: 'app-related-products',
+  templateUrl: './related-products.component.html',
+  styleUrls: ['./related-products.component.scss'],
+  standalone: false,
 })
 export class RelatedProductsComponent {
   @Input() productId: number | undefined;

@@ -1,13 +1,13 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { ProductService } from '@shared/services/product.service';
 
 @Component({
-    selector: 'app-brand-filtering',
-    templateUrl: './brand-filtering.component.html',
-    styleUrls: ['./brand-filtering.component.scss'],
-    standalone: false
+  selector: 'app-brand-filtering',
+  templateUrl: './brand-filtering.component.html',
+  styleUrls: ['./brand-filtering.component.scss'],
+  standalone: false,
 })
 export class BrandFilteringComponent {
   public brands: string[] = [];

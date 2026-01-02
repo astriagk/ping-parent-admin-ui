@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { FormsModule } from '@angular/forms';
 import { ShopRoutingModule } from './shop-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductBannerComponent } from './product-banner/product-banner.component';
@@ -33,8 +33,6 @@ import { CartComponent } from './pages/cart/cart.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { CompareComponent } from './pages/compare/compare.component';
 import { SearchComponent } from './pages/search/search.component';
-
-
 
 @NgModule({
   declarations: [
@@ -74,7 +72,7 @@ import { SearchComponent } from './pages/search/search.component';
     NgxSliderModule,
     FormsModule,
   ],
-  exports:[
+  exports: [
     ProductItemComponent,
     ProductBannerComponent,
     ShopCategoryComponent,
@@ -83,6 +81,6 @@ import { SearchComponent } from './pages/search/search.component';
     SaleOfProductsComponent,
     ProductItemTwoComponent,
     ShopComponent,
-  ]
+  ],
 })
-export class ShopModule { }
+export class ShopModule {}

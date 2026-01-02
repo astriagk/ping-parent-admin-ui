@@ -1,23 +1,25 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { CartService } from 'src/app/shared/services/cart.service';
+import { CartService } from '@shared/services/cart.service';
 
 @Component({
-    selector: 'app-checkout',
-    templateUrl: './checkout.component.html',
-    styleUrls: ['./checkout.component.scss'],
-    standalone: false
+  selector: 'app-checkout',
+  templateUrl: './checkout.component.html',
+  styleUrls: ['./checkout.component.scss'],
+  standalone: false,
 })
 export class CheckoutComponent {
-
   public isOpenLogin = false;
   public isOpenCoupon = false;
   public shipCost: number = 0;
   public couponCode: string = '';
   public payment_name: string = '';
 
-  constructor(public cartService: CartService,private toastrService: ToastrService) { }
+  constructor(
+    public cartService: CartService,
+    private toastrService: ToastrService
+  ) {}
 
   handleOpenLogin() {
     this.isOpenLogin = !this.isOpenLogin;
@@ -34,8 +36,6 @@ export class CheckoutComponent {
     }
   }
 
-
-
   handleCouponSubmit() {
     console.log(this.couponCode);
     // Add coupon code handling logic here
@@ -43,35 +43,33 @@ export class CheckoutComponent {
       // logic here
 
       // when submitted the from than empty will be coupon code
-      this.couponCode = ''
+      this.couponCode = '';
     }
   }
 
   // handle payment item
   handlePayment(value: string) {
-    this.payment_name = value
+    this.payment_name = value;
   }
 
   public checkoutForm!: FormGroup;
   public formSubmitted = false;
 
-
-
-  ngOnInit () {
+  ngOnInit() {
     this.checkoutForm = new FormGroup({
-      firstName:new FormControl(null,Validators.required),
-      lastName:new FormControl(null,Validators.required),
-      company:new FormControl(null),
-      country:new FormControl('bangladesh',Validators.required),
-      address:new FormControl(null,Validators.required),
-      city:new FormControl(null,Validators.required),
-      state:new FormControl(null,Validators.required),
-      apartment:new FormControl(null,Validators.required),
-      zipCode:new FormControl(null,Validators.required),
-      phone:new FormControl(null,Validators.required),
-      orderNote:new FormControl(null),
-      email:new FormControl(null,[Validators.required,Validators.email]),
-    })
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
+      company: new FormControl(null),
+      country: new FormControl('bangladesh', Validators.required),
+      address: new FormControl(null, Validators.required),
+      city: new FormControl(null, Validators.required),
+      state: new FormControl(null, Validators.required),
+      apartment: new FormControl(null, Validators.required),
+      zipCode: new FormControl(null, Validators.required),
+      phone: new FormControl(null, Validators.required),
+      orderNote: new FormControl(null),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+    });
   }
 
   onSubmit() {
@@ -87,17 +85,40 @@ export class CheckoutComponent {
     console.log('checkout-form', this.checkoutForm.value);
   }
 
-  get firstName() { return this.checkoutForm.get('firstName') }
-  get lastName() { return this.checkoutForm.get('lastName') }
-  get company() { return this.checkoutForm.get('company') }
-  get country() { return this.checkoutForm.get('country') }
-  get address() { return this.checkoutForm.get('address') }
-  get city() { return this.checkoutForm.get('city') }
-  get state() { return this.checkoutForm.get('state') }
-  get apartment() { return this.checkoutForm.get('apartment') }
-  get zipCode() { return this.checkoutForm.get('zipCode') }
-  get phone() { return this.checkoutForm.get('phone') }
-  get orderNote() { return this.checkoutForm.get('orderNote') }
-  get email() { return this.checkoutForm.get('email') }
-
+  get firstName() {
+    return this.checkoutForm.get('firstName');
+  }
+  get lastName() {
+    return this.checkoutForm.get('lastName');
+  }
+  get company() {
+    return this.checkoutForm.get('company');
+  }
+  get country() {
+    return this.checkoutForm.get('country');
+  }
+  get address() {
+    return this.checkoutForm.get('address');
+  }
+  get city() {
+    return this.checkoutForm.get('city');
+  }
+  get state() {
+    return this.checkoutForm.get('state');
+  }
+  get apartment() {
+    return this.checkoutForm.get('apartment');
+  }
+  get zipCode() {
+    return this.checkoutForm.get('zipCode');
+  }
+  get phone() {
+    return this.checkoutForm.get('phone');
+  }
+  get orderNote() {
+    return this.checkoutForm.get('orderNote');
+  }
+  get email() {
+    return this.checkoutForm.get('email');
+  }
 }

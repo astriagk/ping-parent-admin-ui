@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import IBlogType from 'src/app/shared/types/blog-d-t';
+import IBlogType from '@shared/types/blog-d-t';
 
 @Component({
-    selector: 'app-blog-postbox-item',
-    templateUrl: './blog-postbox-item.component.html',
-    styleUrls: ['./blog-postbox-item.component.scss'],
-    standalone: false
+  selector: 'app-blog-postbox-item',
+  templateUrl: './blog-postbox-item.component.html',
+  styleUrls: ['./blog-postbox-item.component.scss'],
+  standalone: false,
 })
 export class BlogPostboxItemComponent {
   @Input() blog!: IBlogType;

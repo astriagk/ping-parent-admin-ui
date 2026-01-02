@@ -1,15 +1,15 @@
-import { Component,Input } from '@angular/core';
-import { CartService } from 'src/app/shared/services/cart.service';
-import { CompareService } from 'src/app/shared/services/compare.service';
-import { UtilsService } from 'src/app/shared/services/utils.service';
-import { WishlistService } from 'src/app/shared/services/wishlist.service';
-import { IProduct } from 'src/app/shared/types/product-d-t';
+import { Component, Input } from '@angular/core';
+import { CartService } from '@shared/services/cart.service';
+import { CompareService } from '@shared/services/compare.service';
+import { UtilsService } from '@shared/services/utils.service';
+import { WishlistService } from '@shared/services/wishlist.service';
+import { IProduct } from '@shared/types/product-d-t';
 
 @Component({
-    selector: 'app-product-item',
-    templateUrl: './product-item.component.html',
-    styleUrls: ['./product-item.component.scss'],
-    standalone: false
+  selector: 'app-product-item',
+  templateUrl: './product-item.component.html',
+  styleUrls: ['./product-item.component.scss'],
+  standalone: false,
 })
 export class ProductItemComponent {
   @Input() product!: IProduct;
@@ -18,7 +18,7 @@ export class ProductItemComponent {
     public cartService: CartService,
     public wishlistService: WishlistService,
     public compareService: CompareService,
-    public utilsService: UtilsService,
+    public utilsService: UtilsService
   ) {}
 
   // add to cart
@@ -26,8 +26,8 @@ export class ProductItemComponent {
     this.cartService.addCartProduct(item);
   }
 
-   // add to cart
-   addToWishlist(product: IProduct) {
+  // add to cart
+  addToWishlist(product: IProduct) {
     this.wishlistService.add_wishlist_product(product);
   }
 
@@ -38,13 +38,18 @@ export class ProductItemComponent {
 
   // Function to check if an item is in the cart
   isItemInCart(item: IProduct): boolean {
-    return this.cartService.getCartProducts().some((prd: IProduct) => prd.id === item.id);
+    return this.cartService
+      .getCartProducts()
+      .some((prd: IProduct) => prd.id === item.id);
   }
   isItemInWishlist(item: IProduct): boolean {
-    return this.wishlistService.getWishlistProducts().some((prd: IProduct) => prd.id === item.id);
+    return this.wishlistService
+      .getWishlistProducts()
+      .some((prd: IProduct) => prd.id === item.id);
   }
   isItemInCompare(item: IProduct): boolean {
-    return this.compareService.getCompareProducts().some((prd: IProduct) => prd.id === item.id);
+    return this.compareService
+      .getCompareProducts()
+      .some((prd: IProduct) => prd.id === item.id);
   }
-
 }

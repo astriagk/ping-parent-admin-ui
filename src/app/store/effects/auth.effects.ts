@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as AuthActions from '../actions/auth.actions';
-import { AuthService } from '../../shared/services/auth.service';
-import { LocalStorageKey } from '../../shared/constants/app.enums';
+import { AuthService } from '@shared/services/auth.service';
+import { LocalStorageKey } from '@shared/constants/app.enums';
 
 @Injectable()
 export class AuthEffects {

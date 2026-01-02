@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { BlogComponent } from './blog/blog.component';
 import { BlogLeftSideComponent } from './blog-left-side/blog-left-side.component';
@@ -17,8 +17,6 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-
-
 
 @NgModule({
   declarations: [
@@ -42,6 +40,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-  ]
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}

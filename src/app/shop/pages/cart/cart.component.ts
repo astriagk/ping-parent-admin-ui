@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { CartService } from 'src/app/shared/services/cart.service';
+import { CartService } from '@shared/services/cart.service';
 
 @Component({
-    selector: 'app-cart',
-    templateUrl: './cart.component.html',
-    styleUrls: ['./cart.component.scss'],
-    standalone: false
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.scss'],
+  standalone: false,
 })
 export class CartComponent {
-
   couponCode: string = '';
   shipCost: number = 0;
 
-  constructor (public cartService:CartService) {}
+  constructor(public cartService: CartService) {}
 
   handleCouponSubmit() {
-    if(this.couponCode){
-      this.couponCode = ''
+    if (this.couponCode) {
+      this.couponCode = '';
     }
   }
 

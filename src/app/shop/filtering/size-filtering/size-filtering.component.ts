@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { ProductService } from '@shared/services/product.service';
 
 @Component({
-    selector: 'app-size-filtering',
-    templateUrl: './size-filtering.component.html',
-    styleUrls: ['./size-filtering.component.scss'],
-    standalone: false
+  selector: 'app-size-filtering',
+  templateUrl: './size-filtering.component.html',
+  styleUrls: ['./size-filtering.component.scss'],
+  standalone: false,
 })
 export class SizeFilteringComponent {
   public all_sizes: string[] = [];

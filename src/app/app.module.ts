@@ -6,13 +6,13 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShopModule } from './shop/shop.module';
-import { reducers } from './store/app.state';
 import { environment } from '../environments/environment';
-import { AuthEffects } from './store/effects/auth.effects';
+import { reducers } from '@store/app.state';
+import { AuthEffects } from '@store/effects/auth.effects';
 
 @NgModule({
   declarations: [AppComponent],

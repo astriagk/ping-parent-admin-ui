@@ -1,16 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swiper from 'swiper';
 import { EffectFade, Pagination } from 'swiper/modules';
-import { HeroSliderData } from 'src/app/shared/data/hero-slider-data';
-import { IHeroSlider } from 'src/app/shared/types/hero-slider-t';
-import { IProduct } from 'src/app/shared/types/product-d-t';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { IHeroSlider } from '@shared/types/hero-slider-t';
+import { IProduct } from '@shared/types/product-d-t';
+import { ProductService } from '@shared/services/product.service';
+import { HeroSliderData } from '@shared/data/hero-slider-data';
 
 @Component({
-    selector: 'app-home-five',
-    templateUrl: './home-five.component.html',
-    styleUrls: ['./home-five.component.scss'],
-    standalone: false
+  selector: 'app-home-five',
+  templateUrl: './home-five.component.html',
+  styleUrls: ['./home-five.component.scss'],
+  standalone: false,
 })
 export class HomeFiveComponent {
   @ViewChild('heroSliderContainer') heroSliderContainer!: ElementRef;

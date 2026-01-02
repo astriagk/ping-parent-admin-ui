@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as AuthActions from '../actions/auth.actions';
-import { Admin, AuthError } from 'src/app/shared/types/Pages/login.types';
+import { Admin, AuthError } from '@shared/types/Pages/login.types';
 
 export interface AuthState {
   user: Admin | null;

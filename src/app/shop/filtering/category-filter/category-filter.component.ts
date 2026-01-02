@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import category_data from 'src/app/shared/data/category-data';
-import { UtilsService } from 'src/app/shared/services/utils.service';
-import { ICategoryType } from 'src/app/shared/types/category-d-t';
+import category_data from '@shared/data/category-data';
+import { UtilsService } from '@shared/services/utils.service';
+import { ICategoryType } from '@shared/types/category-d-t';
 
 @Component({
-    selector: 'app-category-filter',
-    templateUrl: './category-filter.component.html',
-    styleUrls: ['./category-filter.component.scss'],
-    standalone: false
+  selector: 'app-category-filter',
+  templateUrl: './category-filter.component.html',
+  styleUrls: ['./category-filter.component.scss'],
+  standalone: false,
 })
 export class CategoryFilterComponent {
-  public categoryData: ICategoryType[] = category_data;;
+  public categoryData: ICategoryType[] = category_data;
   public category: string | null = null;
   public subcategory: string | null = null;
 

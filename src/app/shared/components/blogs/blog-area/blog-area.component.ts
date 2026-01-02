@@ -1,22 +1,21 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { UtilsService } from 'src/app/shared/services/utils.service';
-import IBlogType from 'src/app/shared/types/blog-d-t';
+import { ProductService } from '@shared/services/product.service';
+import { UtilsService } from '@shared/services/utils.service';
+import IBlogType from '@shared/types/blog-d-t';
 
 @Component({
-    selector: 'app-blog-area',
-    templateUrl: './blog-area.component.html',
-    styleUrls: ['./blog-area.component.scss'],
-    standalone: false
+  selector: 'app-blog-area',
+  templateUrl: './blog-area.component.html',
+  styleUrls: ['./blog-area.component.scss'],
+  standalone: false,
 })
 export class BlogAreaComponent {
-
-  @Input() left_side:boolean = false;
-  @Input() no_side:boolean = false;
-  @Input() blog_2_col:boolean = false;
-  @Input() blog_3_col:boolean = false;
+  @Input() left_side: boolean = false;
+  @Input() no_side: boolean = false;
+  @Input() blog_2_col: boolean = false;
+  @Input() blog_3_col: boolean = false;
 
   getClass() {
     let dynamicClass = '';
@@ -60,8 +59,15 @@ export class BlogAreaComponent {
         // Sorting Filter
         this.blogs = response.filter((b) => b.blog === 'blog-standard');
         // Paginate Products
-        this.paginate = this.productService.getPager(this.blogs.length, Number(+this.pageNo), this.pageSize);
-        this.blogs = this.blogs.slice(this.paginate.startIndex, this.paginate.endIndex + 1);
+        this.paginate = this.productService.getPager(
+          this.blogs.length,
+          Number(+this.pageNo),
+          this.pageSize
+        );
+        this.blogs = this.blogs.slice(
+          this.paginate.startIndex,
+          this.paginate.endIndex + 1
+        );
       });
     });
   }

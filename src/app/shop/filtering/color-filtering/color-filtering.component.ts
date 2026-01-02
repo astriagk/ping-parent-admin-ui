@@ -1,13 +1,13 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { ProductService } from '@shared/services/product.service';
 
 @Component({
-    selector: 'app-color-filtering',
-    templateUrl: './color-filtering.component.html',
-    styleUrls: ['./color-filtering.component.scss'],
-    standalone: false
+  selector: 'app-color-filtering',
+  templateUrl: './color-filtering.component.html',
+  styleUrls: ['./color-filtering.component.scss'],
+  standalone: false,
 })
 export class ColorFilteringComponent {
   public all_colors: string[] = [];
