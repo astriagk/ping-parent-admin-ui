@@ -1,0 +1,9 @@
+<app-generic-table
+  [items]="admins"
+  [columns]="columns"
+  [actions]="actions"
+  [tableCaption]="'Admin users list'"
+  [emptyMessage]="'No admins found.'"
+  (rowClicked)="onRowClicked($event)"
+  (actionClicked)="onActionClicked($event)"
+></app-generic-table>

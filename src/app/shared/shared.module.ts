@@ -24,6 +24,7 @@ import { HomeSevenTestimonialComponent } from './components/testimonial/home-sev
 import { FooterThreeComponent } from './footer/footer-three/footer-three.component';
 import { VideoPopupComponent } from './components/modals/video-popup/video-popup.component';
 import { BreadcrumbOneComponent } from './components/breadcrumb/breadcrumb-one/breadcrumb-one.component';
+import { BreadcrumbTwoComponent } from './components/breadcrumb/breadcrumb-two/breadcrumb-two.component';
 import { PaginationComponent } from './ui/pagination/pagination.component';
 import { ProductDetailsUpperComponent } from './components/product-details-upper/product-details-upper.component';
 import { ReviewFormComponent } from './components/forms/review-form/review-form.component';
@@ -35,6 +36,8 @@ import { BlogReplyFormComponent } from './components/forms/blog-reply-form/blog-
 import { ProductModalComponent } from './components/modals/product-modal/product-modal.component';
 import { ContactFormComponent } from './components/forms/contact-form/contact-form.component';
 import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { GenericTableComponent } from './components/generic-table/generic-table.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,7 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     FooterThreeComponent,
     VideoPopupComponent,
     BreadcrumbOneComponent,
+    BreadcrumbTwoComponent,
     PaginationComponent,
     ProductDetailsUpperComponent,
     ReviewFormComponent,
@@ -70,6 +74,8 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     ProductModalComponent,
     ContactFormComponent,
     OffcanvasComponent,
+    AdminLayoutComponent,
+    GenericTableComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -90,6 +96,7 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     FooterThreeComponent,
     VideoPopupComponent,
     BreadcrumbOneComponent,
+    BreadcrumbTwoComponent,
     PaginationComponent,
     ProductDetailsUpperComponent,
     ReviewFormComponent,
@@ -100,6 +107,8 @@ import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
     ProductModalComponent,
     ContactFormComponent,
     OffcanvasComponent,
+    AdminLayoutComponent,
+    GenericTableComponent,
   ],
 })
 export class SharedModule {}

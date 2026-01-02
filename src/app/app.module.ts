@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +15,9 @@ import { ShopModule } from './shop/shop.module';
 import { environment } from '../environments/environment';
 import { reducers } from '@store/app.state';
 import { AuthEffects } from '@store/effects/auth.effects';
+import { AdminEffects } from '@store/effects/admin.effects';
+import { LoaderInterceptor } from '@shared/interceptors/loader.interceptor';
+import { loaderConfig } from '@shared/config/loader.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +27,7 @@ import { AuthEffects } from '@store/effects/auth.effects';
     SharedModule,
     ShopModule,
     BrowserAnimationsModule,
+    NgxUiLoaderModule.forRoot(loaderConfig),
     ToastrModule.forRoot({
       timeOut: 3000,
       progressBar: false,
@@ -29,13 +35,19 @@ import { AuthEffects } from '@store/effects/auth.effects';
       positionClass: 'toast-top-center',
     }),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, AdminEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

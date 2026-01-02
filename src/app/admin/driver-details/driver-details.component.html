@@ -1,0 +1,113 @@
+<div class="driver-details-container">
+  <div class="loading" *ngIf="loading">
+    <p>Loading driver details...</p>
+  </div>
+
+  <div class="details-content" *ngIf="!loading && driver">
+    <div class="header">
+      <button class="btn-back" (click)="goBack()">← Back to Drivers</button>
+      <h1>Driver Details</h1>
+    </div>
+
+    <div class="details-card">
+      <div class="card-header">
+        <div class="driver-info">
+          <h2>{{ driver.name }}</h2>
+          <span [class]="'status-badge ' + (driver.status === 'Active' ? 'active' : 'offline')">
+            {{ driver.status }}
+          </span>
+          <span class="rating">⭐ {{ driver.rating }}</span>
+        </div>
+        <div class="actions">
+          <button class="btn-edit" (click)="editDriver()">Edit</button>
+          <button class="btn-suspend" (click)="suspendDriver()">Suspend</button>
+          <button class="btn-delete" (click)="deleteDriver()">Delete</button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="stats-section">
+          <div class="stat-card">
+            <label>Total Trips</label>
+            <p class="stat-value">{{ driver.totalTrips }}</p>
+          </div>
+          <div class="stat-card">
+            <label>Total Earnings</label>
+            <p class="stat-value">${{ driver.totalEarnings | number: '1.2-2' }}</p>
+          </div>
+          <div class="stat-card">
+            <label>Rating</label>
+            <p class="stat-value">{{ driver.rating }} / 5.0</p>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Personal Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Driver ID</label>
+              <p>{{ driver.id }}</p>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <p>{{ driver.email }}</p>
+            </div>
+            <div class="info-item">
+              <label>Phone</label>
+              <p>{{ driver.phone }}</p>
+            </div>
+            <div class="info-item">
+              <label>Address</label>
+              <p>{{ driver.address }}</p>
+            </div>
+            <div class="info-item">
+              <label>Emergency Contact</label>
+              <p>{{ driver.emergencyContact }}</p>
+            </div>
+            <div class="info-item">
+              <label>License Number</label>
+              <p>{{ driver.licenseNumber }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Vehicle Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Vehicle Number</label>
+              <p>{{ driver.vehicleNumber }}</p>
+            </div>
+            <div class="info-item">
+              <label>Vehicle Model</label>
+              <p>{{ driver.vehicleModel }}</p>
+            </div>
+            <div class="info-item">
+              <label>Vehicle Color</label>
+              <p>{{ driver.vehicleColor }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Account Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Joined Date</label>
+              <p>{{ driver.joinedDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+            </div>
+            <div class="info-item">
+              <label>Last Active</label>
+              <p>{{ driver.lastActiveDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="not-found" *ngIf="!loading && !driver">
+    <p>Driver not found.</p>
+    <button class="btn-back" (click)="goBack()">Back to Drivers</button>
+  </div>
+</div>

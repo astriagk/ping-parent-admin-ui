@@ -1,0 +1,86 @@
+<div class="generic-table">
+  <div class="generic-table__table">
+    <table [attr.aria-label]="tableCaption || 'Data table'">
+      <caption *ngIf="tableCaption" class="sr-only">
+        {{
+          tableCaption
+        }}
+      </caption>
+
+      <thead>
+        <tr>
+          <th *ngFor="let col of columns; trackBy: trackByField" scope="col">
+            {{ col.header }}
+          </th>
+          <th *ngIf="actions.length" scope="col">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let item of items; let i = index; trackBy: trackByIndex"
+          (click)="rowClick(item)"
+          (keydown.enter)="rowClick(item)"
+          (keydown.space)="rowClick(item)"
+          [class.clickable-row]="enableRowClick"
+          [attr.tabindex]="enableRowClick ? 0 : null"
+          role="row"
+        >
+          <td *ngFor="let col of columns; trackBy: trackByField" role="cell">
+            <ng-container *ngIf="col.cellTemplate; else defaultCell">
+              <ng-container
+                *ngTemplateOutlet="
+                  col.cellTemplate;
+                  context: { $implicit: item, index: i }
+                "
+              ></ng-container>
+            </ng-container>
+
+            <ng-template #defaultCell>
+              <span
+                *ngIf="
+                  isStatusField(getCellValue(col, item, i));
+                  else plainValue
+                "
+                class="generic-table__status-badge"
+                [ngClass]="getCellValue(col, item, i).class"
+              >
+                {{ getCellValue(col, item, i).label }}
+              </span>
+              <ng-template #plainValue>{{
+                getCellValue(col, item, i)
+              }}</ng-template>
+            </ng-template>
+          </td>
+
+          <td *ngIf="actions.length" role="cell" class="actions-cell">
+            <button
+              *ngFor="let action of actions; trackBy: trackByIndex"
+              type="button"
+              class="generic-table__btn-view"
+              (click)="onAction(action, item, $event)"
+              [ngClass]="action.class"
+              [attr.aria-label]="action.ariaLabel || action.label"
+            >
+              <i
+                *ngIf="action.icon"
+                [class]="action.icon"
+                aria-hidden="true"
+              ></i>
+              {{ action.label }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div
+      *ngIf="items.length === 0"
+      class="generic-table__table-no-data"
+      role="status"
+      aria-live="polite"
+    >
+      <p>{{ emptyMessage }}</p>
+    </div>
+  </div>
+</div>

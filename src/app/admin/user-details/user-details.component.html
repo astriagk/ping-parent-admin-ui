@@ -1,0 +1,117 @@
+<div class="user-details-container">
+  <div class="loading" *ngIf="loading">
+    <p>Loading user details...</p>
+  </div>
+
+  <div class="details-content" *ngIf="!loading && user">
+    <div class="header">
+      <button class="btn-back" (click)="goBack()">← Back to Users</button>
+      <h1>User Details</h1>
+    </div>
+
+    <div class="details-card">
+      <div class="card-header">
+        <div class="user-info">
+          <h2>{{ user.name }}</h2>
+          <span [class]="'status-badge ' + (user.status === 'Active' ? 'active' : 'inactive')">
+            {{ user.status }}
+          </span>
+          <span [class]="'account-badge ' + (user.accountType === 'Premium' ? 'premium' : 'standard')">
+            {{ user.accountType }}
+          </span>
+        </div>
+        <div class="actions">
+          <button class="btn-edit" (click)="editUser()">Edit</button>
+          <button class="btn-suspend" (click)="suspendUser()">Suspend</button>
+          <button class="btn-delete" (click)="deleteUser()">Delete</button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="stats-section">
+          <div class="stat-card">
+            <label>Total Trips</label>
+            <p class="stat-value">{{ user.totalTrips }}</p>
+          </div>
+          <div class="stat-card">
+            <label>Total Spent</label>
+            <p class="stat-value">${{ user.totalSpent | number: '1.2-2' }}</p>
+          </div>
+          <div class="stat-card">
+            <label>Account Type</label>
+            <p class="stat-value">{{ user.accountType }}</p>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Personal Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>User ID</label>
+              <p>{{ user.id }}</p>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <p>{{ user.email }}</p>
+            </div>
+            <div class="info-item">
+              <label>Phone</label>
+              <p>{{ user.phone }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Address Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Street Address</label>
+              <p>{{ user.address }}</p>
+            </div>
+            <div class="info-item">
+              <label>City</label>
+              <p>{{ user.city }}</p>
+            </div>
+            <div class="info-item">
+              <label>State</label>
+              <p>{{ user.state }}</p>
+            </div>
+            <div class="info-item">
+              <label>ZIP Code</label>
+              <p>{{ user.zipCode }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Payment Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Payment Method</label>
+              <p>{{ user.paymentMethod }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>Account Information</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Joined Date</label>
+              <p>{{ user.joinedDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+            </div>
+            <div class="info-item">
+              <label>Last Active</label>
+              <p>{{ user.lastActiveDate | date: 'MMM dd, yyyy HH:mm' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="not-found" *ngIf="!loading && !user">
+    <p>User not found.</p>
+    <button class="btn-back" (click)="goBack()">Back to Users</button>
+  </div>
+</div>

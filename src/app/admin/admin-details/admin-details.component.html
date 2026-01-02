@@ -1,0 +1,82 @@
+<div class="admin">
+  <div class="admin__loading" *ngIf="loading">
+    <p>Loading admin details...</p>
+  </div>
+
+  <div *ngIf="!loading && admin">
+    <div class="admin__card">
+      <div class="admin__card-header">
+        <div class="admin__card-admin-info">
+          <h2>{{ admin.username }}</h2>
+          <span
+            [class]="
+              'admin__status-badge ' + getUserStatusClass(admin.is_active)
+            "
+          >
+            {{ getUserStatusLabel(admin.is_active) }}
+          </span>
+        </div>
+        <div class="admin__card-actions">
+          <button class="btn-edit" (click)="editAdmin()">Edit</button>
+          <button
+            class="admin__toggle-status-btn"
+            *ngIf="admin"
+            (click)="toggleAdminStatus()"
+          >
+            {{ admin.is_active ? "Deactivate Admin" : "Activate Admin" }}
+          </button>
+        </div>
+      </div>
+
+      <div class="admin__card-body">
+        <div class="admin__info-section">
+          <h3>Basic Information</h3>
+          <div class="admin__info-grid">
+            <div class="admin__info-item">
+              <label>Admin ID</label>
+              <p>{{ admin.admin_id }}</p>
+            </div>
+            <div class="admin__info-item">
+              <label>Email</label>
+              <p>{{ admin.email }}</p>
+            </div>
+            <div class="admin__info-item">
+              <label>Role</label>
+              <p>{{ getRoleLabel(admin.admin_role) }}</p>
+            </div>
+            <div class="admin__info-item">
+              <label>Phone</label>
+              <p>{{ admin.phone_number }}</p>
+            </div>
+            <div class="admin__info-item">
+              <!-- Address not available in API response -->
+            </div>
+          </div>
+        </div>
+
+        <div class="admin__info-section">
+          <h3>Account Information</h3>
+          <div class="admin__info-grid">
+            <div class="admin__info-item">
+              <label>Created At</label>
+              <p>{{ admin.created_at | date : "MMM dd, yyyy HH:mm" }}</p>
+            </div>
+            <div class="admin__info-item">
+              <label>Last Login</label>
+              <p>{{ admin.last_login | date : "MMM dd, yyyy HH:mm" }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Permissions not available in API response -->
+      </div>
+    </div>
+  </div>
+
+  <div class="admin__not-found" *ngIf="!loading && !admin">
+    <p>Admin not found.</p>
+    <button class="admin__not-found-back-btn" (click)="goBack()">
+      Back to Admins
+    </button>
+  </div>
+</div>

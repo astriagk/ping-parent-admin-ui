@@ -26,6 +26,7 @@
     "@ngrx/store-devtools": "^21.0.1",
     "bootstrap": "^5.3.2",
     "ngx-toastr": "^17.0.2",
+    "ngx-ui-loader": "^19.0.0",
     "rxjs": "~7.8.0",
     "swiper": "^10.3.0",
     "tslib": "^2.3.0",

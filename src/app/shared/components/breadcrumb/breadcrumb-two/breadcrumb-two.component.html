@@ -1,0 +1,36 @@
+<section
+  class="page__title page__title-2 p-relative d-flex align-items-center"
+  [style.background-image]="'url(' + bg_img + ')'"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="page__title-inner text-left">
+          <h1>{{ title }}</h1>
+          <div class="page__title-breadcrumb">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li
+                  *ngFor="let breadcrumb of breadcrumbs; let last = last"
+                  class="breadcrumb-item"
+                  [class.active]="last"
+                  [attr.aria-current]="last ? 'page' : null"
+                >
+                  <a
+                    *ngIf="!last && breadcrumb.clickable"
+                    [routerLink]="breadcrumb.url"
+                    >{{ breadcrumb.label }}</a
+                  >
+                  <span *ngIf="!last && !breadcrumb.clickable">{{
+                    breadcrumb.label
+                  }}</span>
+                  <span *ngIf="last">{{ breadcrumb.label }}</span>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
