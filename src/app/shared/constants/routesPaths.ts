@@ -3,4 +3,5 @@ export const ROUTE_PATHS = {
   LOGIN: '/pages/login',
   REGISTER: '/pages/register',
   ADMIN_LIST: '/admin/admins',
+  DRIVER_LIST: '/admin/drivers',
 };

@@ -1,4 +1,4 @@
-<div class="driver-details-container">
+<div class="driver-details-container container">
   <div class="details-content" *ngIf="!loading && driver">
     <div class="details-card">
       <div class="card-header">
@@ -33,6 +33,14 @@
           <button class="btn-approve" (click)="approveDriver()">Approve</button>
           <button class="btn-reject" (click)="rejectDriver()">Reject</button>
           <button class="btn-suspend" (click)="suspendDriver()">Suspend</button>
+        </div>
+      </div>
+
+      <div class="rejection-banner" *ngIf="driver.rejection_reason">
+        <div class="banner-icon">⚠️</div>
+        <div class="banner-content">
+          <strong>Rejection Reason:</strong>
+          <span>{{ driver.rejection_reason }}</span>
         </div>
       </div>
 

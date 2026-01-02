@@ -5,12 +5,18 @@ export interface DriverState {
   driver: any | null;
   loading: boolean;
   error: any;
+  updating: boolean;
+  updateSuccess: string | null;
+  updateError: any;
 }
 
 const initialState: DriverState = {
   driver: null,
   loading: false,
   error: null,
+  updating: false,
+  updateSuccess: null,
+  updateError: null,
 };
 
 export const driverReducer = createReducer(
@@ -29,5 +35,21 @@ export const driverReducer = createReducer(
     ...state,
     error,
     loading: false,
+  })),
+  on(DriverActions.updateDriverApprovalStatus, (state) => ({
+    ...state,
+    updating: true,
+    updateSuccess: null,
+    updateError: null,
+  })),
+  on(DriverActions.updateDriverApprovalStatusSuccess, (state, { message }) => ({
+    ...state,
+    updating: false,
+    updateSuccess: message,
+  })),
+  on(DriverActions.updateDriverApprovalStatusFailure, (state, { error }) => ({
+    ...state,
+    updating: false,
+    updateError: error,
   }))
 );

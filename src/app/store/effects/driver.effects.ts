@@ -36,4 +36,32 @@ export class DriverEffects {
       )
     )
   );
+
+  updateDriverApprovalStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DriverActions.updateDriverApprovalStatus),
+      mergeMap(({ driverId, payload }) =>
+        this.driverService.updateDriverApprovalStatus(driverId, payload).pipe(
+          map((response) => {
+            if (response.success) {
+              return DriverActions.updateDriverApprovalStatusSuccess({
+                message: response.message,
+              });
+            } else {
+              return DriverActions.updateDriverApprovalStatusFailure({
+                error: 'Failed to update driver approval status',
+              });
+            }
+          }),
+          catchError((error) =>
+            of(
+              DriverActions.updateDriverApprovalStatusFailure({
+                error: error?.error?.error || 'An error occurred',
+              })
+            )
+          )
+        )
+      )
+    )
+  );
 }

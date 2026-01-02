@@ -76,7 +76,7 @@ export const loaderConfig: NgxUiLoaderConfig = {
 
   // Timing
   maxTime: -1, // Maximum time loader can run (-1 for unlimited)
-  minTime: 500, // Minimum time to show loader once displayed (prevents flash)
+  minTime: 200, // Minimum time to show loader once displayed (prevents flash)
   // If loader appears, it will stay for at least 500ms for smooth UX
 };
 

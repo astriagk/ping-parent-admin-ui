@@ -1,33 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-interface DriverDetails {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  vehicleNumber: string;
-  vehicleModel: string;
-  vehicleColor: string;
-  licenseNumber: string;
-  status: string;
-  rating: number;
-  totalTrips: number;
-  totalEarnings: number;
-  joinedDate: Date;
-  lastActiveDate: Date;
-  address: string;
-  emergencyContact: string;
-}
-
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
-import { loadDriverDetail } from '@store/actions/driver.actions';
+import {
+  loadDriverDetail,
+  updateDriverApprovalStatus,
+} from '@store/actions/driver.actions';
 import {
   selectDriverDetail,
   selectDriverDetailLoading,
   selectDriverDetailError,
+  selectDriverUpdateSuccess,
+  selectDriverUpdateError,
 } from '@store/selectors/driver.selectors';
+import { ApprovalStatus } from '@shared/types/driver.types';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-driver-details',
@@ -44,7 +32,8 @@ export class DriverDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +49,24 @@ export class DriverDetailsComponent implements OnInit {
       this.store.select(selectDriverDetailError).subscribe((error) => {
         this.error = error;
       });
+
+      // Subscribe to update success
+      this.store.select(selectDriverUpdateSuccess).subscribe((message) => {
+        if (message) {
+          this.toastrService.success(message);
+          // Reload driver details after successful update
+          if (this.driverId) {
+            this.store.dispatch(loadDriverDetail({ driverId: this.driverId }));
+          }
+        }
+      });
+
+      // Subscribe to update error
+      this.store.select(selectDriverUpdateError).subscribe((error) => {
+        if (error) {
+          this.toastrService.error(error);
+        }
+      });
     }
   }
 
@@ -67,22 +74,93 @@ export class DriverDetailsComponent implements OnInit {
     this.router.navigate(['/admin/drivers']);
   }
 
-  approveDriver(): void {
-    // TODO: Implement approve functionality
-    console.log('Approve driver:', this.driverId);
-  }
+  async approveDriver(): Promise<void> {
+    if (!this.driverId) return;
 
-  rejectDriver(): void {
-    // TODO: Implement reject functionality
-    if (confirm('Are you sure you want to reject this driver?')) {
-      console.log('Reject driver:', this.driverId);
+    const result = await Swal.fire({
+      title: 'Approve Driver',
+      text: 'Are you sure you want to approve this driver?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, approve!',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
+      this.store.dispatch(
+        updateDriverApprovalStatus({
+          driverId: this.driverId,
+          payload: {
+            approval_status: ApprovalStatus.APPROVED,
+          },
+        })
+      );
     }
   }
 
-  suspendDriver(): void {
-    // TODO: Implement suspend functionality
-    if (confirm('Are you sure you want to suspend this driver?')) {
-      console.log('Suspend driver:', this.driverId);
+  async rejectDriver(): Promise<void> {
+    if (!this.driverId) return;
+
+    const { value: rejectionReason } = await Swal.fire({
+      title: 'Reject Driver',
+      html: '<p>Please provide a reason for rejecting this driver:</p>',
+      input: 'textarea',
+      inputPlaceholder: 'Enter rejection reason...',
+      inputAttributes: {
+        'aria-label': 'Rejection reason',
+        rows: '4',
+      },
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Reject',
+      cancelButtonText: 'Cancel',
+      inputValidator: (value) => {
+        if (!value || !value.trim()) {
+          return 'Rejection reason is required!';
+        }
+        return null;
+      },
+    });
+
+    if (rejectionReason) {
+      this.store.dispatch(
+        updateDriverApprovalStatus({
+          driverId: this.driverId,
+          payload: {
+            approval_status: ApprovalStatus.REJECTED,
+            rejection_reason: rejectionReason.trim(),
+          },
+        })
+      );
+    }
+  }
+
+  async suspendDriver(): Promise<void> {
+    if (!this.driverId) return;
+
+    const result = await Swal.fire({
+      title: 'Suspend Driver',
+      text: 'Are you sure you want to suspend this driver? This will set their status to pending.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ffc107',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, suspend!',
+      cancelButtonText: 'Cancel',
+    });
+
+    if (result.isConfirmed) {
+      this.store.dispatch(
+        updateDriverApprovalStatus({
+          driverId: this.driverId,
+          payload: {
+            approval_status: ApprovalStatus.PENDING,
+          },
+        })
+      );
     }
   }
 }

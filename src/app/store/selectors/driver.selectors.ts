@@ -17,3 +17,18 @@ export const selectDriverDetailError = createSelector(
   selectDriverState,
   (state) => state.error
 );
+
+export const selectDriverUpdating = createSelector(
+  selectDriverState,
+  (state) => state.updating
+);
+
+export const selectDriverUpdateSuccess = createSelector(
+  selectDriverState,
+  (state) => state.updateSuccess
+);
+
+export const selectDriverUpdateError = createSelector(
+  selectDriverState,
+  (state) => state.updateError
+);
